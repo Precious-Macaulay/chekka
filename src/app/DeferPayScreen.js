@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import React, { memo } from "react";
-import { Background } from "../components";
 import { Transaction } from "../components/Home";
 
 const BankScreen = () => {
   return (
-    <Background>
+    <>
       <View style={styles.bank_head}>
         <Image
           style={{
@@ -20,9 +19,17 @@ const BankScreen = () => {
             fontWeight: "500",
           }}
         >
-          Bank Details
+          Deferred Payments
         </Text>
-        <View>{null}</View>
+        <View>
+          <Image
+            style={{
+              width: 34,
+              height: 34,
+            }}
+            source={require("../assets/add.png")}
+          />
+        </View>
       </View>
       <View style={styles.balance_card}>
         <Text
@@ -32,7 +39,7 @@ const BankScreen = () => {
             color: "#6488c5",
           }}
         >
-          Current Balance
+          Total Amount
         </Text>
         <Text
           style={{
@@ -45,19 +52,19 @@ const BankScreen = () => {
         </Text>
       </View>
       <View>
-        <Text style={styles.sub_head}>Transaction History</Text>
+        <Text style={styles.sub_head}>Transaction List</Text>
         <View style={{ height: 470 }}>
           <FlatList
             data={[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]}
             renderItem={() => <Transaction />}
             keyExtractor={(item) => {
-              `${item}bgb`;
+              `${item}bgsb`;
             }}
             showsVerticalScrollIndicator={false}
           />
         </View>
       </View>
-    </Background>
+    </>
   );
 };
 

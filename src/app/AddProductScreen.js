@@ -7,12 +7,12 @@ import {
   ScrollView,
 } from "react-native";
 import React, { memo } from "react";
-import { Background, Button, Input } from "../components";
+import { Button, Input } from "../components";
 
-const PayFormScreen = () => {
+const AddProductScreen = () => {
   return (
-    <Background>
-      <View style={styles.pay_head}>
+    <>
+      <View style={styles.product_head}>
         <Image
           style={{
             width: 24,
@@ -26,28 +26,27 @@ const PayFormScreen = () => {
             fontWeight: "500",
           }}
         >
-          Deferred Payment
+          Add Product
         </Text>
         <View>{null}</View>
       </View>
       <KeyboardAvoidingView>
         <ScrollView>
-          <Input label={"Phone"} placeholder={"Bola"} />
-          <Input label={"Amount"} placeholder={"1236"} />
           <Input label={"Product Name"} placeholder={"Bread"} />
+          <Input label={"Cost Type"} placeholder={"Fixed"} />
+          <Input label={"Amount"} placeholder={"1236"} />
           <Input label={"Quantity"} placeholder={"78"} />
-          {/* <Input label={"Paycode"} placeholder={"Enter 8 digit paycode"} /> */}
-          <Button margin>Pay</Button>
+          <Button margin>Create Product</Button>
         </ScrollView>
       </KeyboardAvoidingView>
-    </Background>
+    </>
   );
 };
 
-export default memo(PayFormScreen);
+export default memo(AddProductScreen);
 
 const styles = StyleSheet.create({
-  pay_head: {
+  product_head: {
     display: "flex",
     marginVertical: 20,
     flexDirection: "row",

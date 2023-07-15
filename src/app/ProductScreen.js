@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import React, { memo } from "react";
-import { Background } from "../components";
 import { Transaction } from "../components/Home";
 
-const BankScreen = () => {
+const ProductScreen = () => {
   return (
-    <Background>
+    <>
       <View style={styles.bank_head}>
         <Image
           style={{
@@ -20,17 +19,9 @@ const BankScreen = () => {
             fontWeight: "500",
           }}
         >
-          Deferred Payments
+          Bread
         </Text>
-        <View>
-          <Image
-            style={{
-              width: 34,
-              height: 34,
-            }}
-            source={require("../assets/add.png")}
-          />
-        </View>
+        <View>{null}</View>
       </View>
       <View style={styles.balance_card}>
         <Text
@@ -40,7 +31,7 @@ const BankScreen = () => {
             color: "#6488c5",
           }}
         >
-          Total Amount
+          Total Payment
         </Text>
         <Text
           style={{
@@ -52,24 +43,89 @@ const BankScreen = () => {
           ₦54,453.87
         </Text>
       </View>
+      <View
+        style={{
+          backgroundColor: "#f7f6f5",
+          borderRadius: 20,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          gap: 1,
+          padding: 20,
+        }}
+      >
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 3,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "600",
+            }}
+          >
+            Total Sales
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "600",
+            }}
+          >
+            67
+          </Text>
+        </View>
+        <View style={{
+            borderWidth: 1
+        }}></View>
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 3,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "600",
+            }}
+          >
+            Stocks Left
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "600",
+            }}
+          >
+            20
+          </Text>
+        </View>
+      </View>
       <View>
-        <Text style={styles.sub_head}>Transaction List</Text>
+        <Text style={styles.sub_head}>Transaction History</Text>
         <View style={{ height: 470 }}>
           <FlatList
             data={[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]}
             renderItem={() => <Transaction />}
             keyExtractor={(item) => {
-              `${item}bgsb`;
+              `${item}bgb`;
             }}
             showsVerticalScrollIndicator={false}
           />
         </View>
       </View>
-    </Background>
+    </>
   );
 };
 
-export default memo(BankScreen);
+export default memo(ProductScreen);
 
 const styles = StyleSheet.create({
   bank_head: {

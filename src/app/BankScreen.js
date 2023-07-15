@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import React, { memo } from "react";
-import { Background } from "../components";
 import { Transaction } from "../components/Home";
 
-const ProductScreen = () => {
+const BankScreen = () => {
   return (
-    <Background>
+    <>
       <View style={styles.bank_head}>
         <Image
           style={{
@@ -20,7 +19,7 @@ const ProductScreen = () => {
             fontWeight: "500",
           }}
         >
-          Bread
+          Bank Details
         </Text>
         <View>{null}</View>
       </View>
@@ -32,7 +31,7 @@ const ProductScreen = () => {
             color: "#6488c5",
           }}
         >
-          Total Payment
+          Current Balance
         </Text>
         <Text
           style={{
@@ -43,71 +42,6 @@ const ProductScreen = () => {
         >
           ₦54,453.87
         </Text>
-      </View>
-      <View
-        style={{
-          backgroundColor: "#f7f6f5",
-          borderRadius: 20,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          gap: 1,
-          padding: 20,
-        }}
-      >
-        <View
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 3,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
-            Total Sales
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
-            67
-          </Text>
-        </View>
-        <View style={{
-            borderWidth: 1
-        }}></View>
-        <View
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 3,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
-            Stocks Left
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
-            20
-          </Text>
-        </View>
       </View>
       <View>
         <Text style={styles.sub_head}>Transaction History</Text>
@@ -122,11 +56,11 @@ const ProductScreen = () => {
           />
         </View>
       </View>
-    </Background>
+    </>
   );
 };
 
-export default memo(ProductScreen);
+export default memo(BankScreen);
 
 const styles = StyleSheet.create({
   bank_head: {

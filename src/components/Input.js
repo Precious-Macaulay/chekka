@@ -1,23 +1,33 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { memo } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
-const Input = ({ label, placeholder, type }) => {
+// Input component
+const Input = ({ label, placeholder, type, size, center, ...props }) => {
   return (
     <View>
-      {label && <Text style={styles.input_label}>{label}</Text>}
+      {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          { fontSize: size },
+          center && { textAlign: "center" },
+        ]}
         placeholder={placeholder}
-        placeholderTextColor={"#d2d4ea"}
+        placeholderTextColor="#d2d4ea"
         textContentType={type}
+        {...props}
       />
     </View>
   );
 };
 
-export default memo(Input);
-
+// Styles
 const styles = StyleSheet.create({
+  label: {
+    fontSize: 16,
+    marginVertical: 12,
+    fontWeight: "500",
+  },
   input: {
     width: "100%",
     height: 54,
@@ -27,9 +37,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 16,
   },
-  input_label: {
-    fontSize: 16,
-    marginVertical: 12,
-    fontWeight: "500"
-  },
 });
+
+export default memo(Input);

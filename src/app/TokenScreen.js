@@ -1,11 +1,11 @@
 import { StyleSheet, View, Image, Text, FlatList } from "react-native";
 import React, { memo } from "react";
-import { Background, Button } from "../components";
+import { Button } from "../components";
 import { Transaction } from "../components/Home";
 
 const TokenScreen = () => {
   return (
-    <Background>
+    <>
       <View style={styles.bank_head}>
         <Image
           style={{
@@ -104,7 +104,7 @@ const TokenScreen = () => {
           />
         </View>
       </View>
-    </Background>
+    </>
   );
 };
 

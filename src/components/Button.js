@@ -1,7 +1,7 @@
 import { StyleSheet, Pressable, Text } from "react-native";
-import React, { memo } from "react";
+import React, { memo, forwardRef } from "react";
 
-const Button = ({ children, outline, margin, ...props }) => {
+const Button = forwardRef(({ children, outline, margin, ...props }, ref) => {
   return (
     <Pressable
       {...props}
@@ -10,13 +10,14 @@ const Button = ({ children, outline, margin, ...props }) => {
         outline && styles.outline,
         margin && styles.margin,
       ]}
+      ref={ref}
     >
       <Text style={[styles.text, outline && styles.outlineText]}>
         {children}
       </Text>
     </Pressable>
   );
-};
+});
 
 export default memo(Button);
 

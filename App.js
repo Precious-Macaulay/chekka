@@ -20,7 +20,7 @@ import {
   AddProductScreen,
   ProductScreen,
   TokenScreen,
-} from "./src/screens";
+} from "/app";
 
 // SplashScreen.preventAutoHideAsync()
 

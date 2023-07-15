@@ -1,11 +1,10 @@
 import { Image, FlatList, StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
-import { Background } from "../components";
 import { Card, Feature, Transaction } from "../components/Home";
 
 const HomeScreen = () => {
   return (
-    <Background>
+    <>
       <View style={styles.home_head}>
         <Image
           style={{
@@ -52,7 +51,7 @@ const HomeScreen = () => {
           />
         </View>
       </View>
-    </Background>
+    </>
   );
 };
 

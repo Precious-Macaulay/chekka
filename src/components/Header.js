@@ -1,30 +1,31 @@
-import { StyleSheet, View, Text } from "react-native";
 import React, { memo } from "react";
+import { StyleSheet, View, Text } from "react-native";
 
-const Header = ({ heading, subHeading}) => {
+// Header component
+const Header = ({ heading, subHeading }) => {
   return (
-    <View
-      style={{
-        marginVertical: 15,
-      }}
-    >
-      <Text style={styles.h1}>{heading}</Text>
-      <Text style={styles.h6}>{subHeading}</Text>
+    <View style={styles.container}>
+      <Text style={styles.heading}>{heading}</Text>
+      <Text style={styles.subHeading}>{subHeading}</Text>
     </View>
   );
 };
 
-export default memo(Header);
-
+// Styles
 const styles = StyleSheet.create({
-  h1: {
+  container: {
+    marginVertical: 15,
+  },
+  heading: {
     fontSize: 24,
     fontWeight: "600",
     lineHeight: 40,
   },
-  h6: {
+  subHeading: {
     fontSize: 16,
     color: "#d2d4ea",
     fontWeight: "600",
   },
 });
+
+export default memo(Header);

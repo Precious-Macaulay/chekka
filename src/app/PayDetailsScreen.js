@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { memo } from "react";
-import { Background, Button } from "../components";
+import { Button } from "../components";
 import { DetailCard } from "../components/Banks";
 
 const PayDetailsScreen = () => {
   return (
-    <Background>
+    <>
       <View style={styles.bank_head}>
         <Image
           style={{
@@ -84,7 +84,7 @@ const PayDetailsScreen = () => {
           <Button outline>Cancel</Button>
         </View>
       </View>
-    </Background>
+    </>
   );
 };
 

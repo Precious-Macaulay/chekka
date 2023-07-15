@@ -7,10 +7,10 @@ const PinInput = ({ label, margin }) => {
     <View>
       {label && <Text style={styles.input_label}>{label}</Text>}
       <View style={[styles.pin_input, margin && styles.margin]}>
-        <Input />
-        <Input />
-        <Input />
-        <Input />
+        <Input keyboardType="numeric" maxLength={1} size={24} center />
+        <Input keyboardType="numeric" maxLength={1} size={24} center />
+        <Input keyboardType="numeric" maxLength={1} size={24} center />
+        <Input keyboardType="numeric" maxLength={1} size={24} center />
       </View>
     </View>
   );
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   pin_input: {
     display: "flex",
     flexDirection: "row",
-    gap: 20,
+    gap: 18,
     width: "100%",
   },
   input_label: {
