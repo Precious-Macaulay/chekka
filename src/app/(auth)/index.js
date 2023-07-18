@@ -8,8 +8,9 @@ import {
 } from "react-native";
 import logo from "../assets/logo.png";
 import illustration from "../assets/startscreen.png";
-import { Button } from "../components";
+import { Button } from "../../components";
 import { Link } from "expo-router";
+import axios from "axios";
 
 // StartScreen component
 const StartScreen = () => {

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import React, { memo } from "react";
-import { Transaction } from "../components/Home";
+import { Transaction } from "../../components/Home";
 
 const BankScreen = () => {
   return (
@@ -19,17 +19,9 @@ const BankScreen = () => {
             fontWeight: "500",
           }}
         >
-          Deferred Payments
+          Bank Details
         </Text>
-        <View>
-          <Image
-            style={{
-              width: 34,
-              height: 34,
-            }}
-            source={require("../assets/add.png")}
-          />
-        </View>
+        <View>{null}</View>
       </View>
       <View style={styles.balance_card}>
         <Text
@@ -39,7 +31,7 @@ const BankScreen = () => {
             color: "#6488c5",
           }}
         >
-          Total Amount
+          Current Balance
         </Text>
         <Text
           style={{
@@ -52,13 +44,13 @@ const BankScreen = () => {
         </Text>
       </View>
       <View>
-        <Text style={styles.sub_head}>Transaction List</Text>
+        <Text style={styles.sub_head}>Transaction History</Text>
         <View style={{ height: 470 }}>
           <FlatList
             data={[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]}
             renderItem={() => <Transaction />}
             keyExtractor={(item) => {
-              `${item}bgsb`;
+              `${item}bgb`;
             }}
             showsVerticalScrollIndicator={false}
           />

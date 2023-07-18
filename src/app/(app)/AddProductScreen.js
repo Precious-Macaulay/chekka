@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import React, { memo } from "react";
-import { Button, Input } from "../components";
+import { Button, Input } from "../../components";
 
 const AddProductScreen = () => {
   return (

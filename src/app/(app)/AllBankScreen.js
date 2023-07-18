@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 import React, { memo } from "react";
-import { Button, Header } from "../components";
-import Card from "../components/Banks/Card";
+import { Button, Header } from "../../components";
+import Card from "../../components/Banks/Card";
 
 const AllBankScreen = () => {
   return (
