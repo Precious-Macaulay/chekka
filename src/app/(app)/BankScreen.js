@@ -11,7 +11,7 @@ const BankScreen = () => {
             width: 24,
             height: 24,
           }}
-          source={require("../assets/back.png")}
+          source={require("../../assets/back.png")}
         />
         <Text
           style={{

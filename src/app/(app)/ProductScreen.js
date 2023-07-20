@@ -1,8 +1,33 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
-import React, { memo } from "react";
-import { Transaction } from "../components/Home";
+import React, { memo,useState } from "react";
+import { Transaction } from "../../components/Home";
+import { useAuth } from "../../contexts/auth";
+import API_BASE_URL from "../../constants/index";
+import axios from "axios";
+
 
 const ProductScreen = () => {
+  const [transactions, setTransactions] = useState([]);
+
+  const { user } = useAuth();
+
+  const getTransactions = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/transactions`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      setTransactions(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTransactions();
+  }, []);
+
   return (
     <>
       <View style={styles.bank_head}>
@@ -11,7 +36,7 @@ const ProductScreen = () => {
             width: 24,
             height: 24,
           }}
-          source={require("../assets/back.png")}
+          source={require("../../assets/back.png")}
         />
         <Text
           style={{

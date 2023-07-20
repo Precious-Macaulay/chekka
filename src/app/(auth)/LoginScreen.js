@@ -12,32 +12,17 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import API_BASE_URL from "../../constants";
-import { saveTokenToStorage } from "../../helpers/storage";
 import { Link, router } from "expo-router";
 import { useAuth } from "../../contexts/auth";
 
-// Validation schema for login form
-const validationSchema = Yup.object().shape({
-  phoneNumber: Yup.string()
-    .required("Phone Number is required")
-    .matches(
-      /^\+234[789]\d{9}$/,
-      "Invalid Nigerian phone number input country code"
-    ),
-  pin: Yup.string()
-    .required("PIN is required")
-    .length(4, "PIN must be exactly 4 digits"),
-});
-
 const LoginScreen = () => {
-  // Get the signIn function from the auth context
-  const { signIn } = useAuth();
-  // Function to handle login submission
+  const auth = useAuth(); // Get the signIn function from the auth context
+
   const handleSubmitForm = async (values) => {
     try {
       let requestData = JSON.stringify({
         phone_number: values.phoneNumber,
-        pin: values.pin,
+        pin: values.pin.join(""),
       });
 
       // Perform a POST request to the server to save the PIN
@@ -46,12 +31,11 @@ const LoginScreen = () => {
           "Content-Type": "application/json",
         },
       });
-      // Save the token to the storage
-      const token = JSON.parse(response.token);
-      await saveTokenToStorage(token);
 
-      //  update the user context
-      signIn(token);
+      // Save the token to the storage
+      const token = response.data.token;
+      // Update the user context
+      auth.signIn(token);
 
       // Replace the route after successful PIN creation
       router.replace({
@@ -62,44 +46,66 @@ const LoginScreen = () => {
     }
   };
 
+  const validationSchema = Yup.object().shape({
+    phoneNumber: Yup.string()
+      .required("Phone Number is required")
+      .matches(
+        /^\+234[789]\d{9}$/,
+        "Invalid Nigerian phone number input country code"
+      ),
+    pin: Yup.array()
+      .required("PIN is required")
+      .of(Yup.string().matches(/^[0-9]+$/, "PIN must be digits"))
+      .length(4),
+  });
+
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <Back />
           <Header
-            heading={"Welcome Back"}
-            subHeading={"Enter your details to login"}
+            heading="Welcome Back"
+            subHeading="Enter your details to login"
           />
           <Formik
             initialValues={{
               phoneNumber: "",
-              pin: "",
+              pin: ["", "", "", ""],
             }}
             onSubmit={handleSubmitForm}
             validationSchema={validationSchema}
           >
-            {({ handleChange, handleSubmit, values, errors }) => (
+            {({
+              setFieldValue,
+              handleChange,
+              handleSubmit,
+              values,
+              errors,
+            }) => (
               <>
                 <Input
-                  label={"Phone Number"}
-                  placeholder={"+2348162060070"}
+                  label="Phone Number"
+                  placeholder="+2348162060070"
                   type="telephoneNumber"
                   keyboardType="phone-pad"
                   onChangeText={handleChange("phoneNumber")}
                   value={values.phoneNumber}
                 />
-                {errors.phoneNumber && ( // If the form has been touched and the error message exists
-                  <Text style={{ color: "red" }}>{errors.phoneNumber}</Text>
+                {errors.phoneNumber && (
+                  <Text style={styles.errorText}>{errors.phoneNumber}</Text>
                 )}
 
                 <PinInput
-                  label={"Enter your 4 digit PIN"}
+                  label="Enter your 4-digit PIN"
                   onChangeText={handleChange("pin")}
-                  value={values.pin}
+                  pin={values.pin}
+                  setPin={(value) => setFieldValue("pin", value)}
                 />
-                {errors.pin && ( // If the form has been touched and the error message exists
-                  <Text style={{ color: "red" }}>{errors.pin}</Text>
+                {errors.pin && (
+                  <Text style={styles.errorText}>
+                    {errors.pin + " " + values.pin}
+                  </Text>
                 )}
                 <Button onPress={handleSubmit} margin>
                   Login
@@ -108,8 +114,8 @@ const LoginScreen = () => {
             )}
           </Formik>
           <Link href="/ResetScreen" asChild>
-            <View style={styles.forgot_pin}>
-              <Text style={styles.forgot_pin_text}>{"Forgot PIN ?"}</Text>
+            <View style={styles.forgotPin}>
+              <Text style={styles.forgotPinText}>Forgot PIN?</Text>
             </View>
           </Link>
         </View>
@@ -118,21 +124,23 @@ const LoginScreen = () => {
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
     padding: 24,
   },
-  forgot_pin: {
+  forgotPin: {
     width: "100%",
   },
-  forgot_pin_text: {
+  forgotPinText: {
     textAlign: "center",
     fontSize: 16,
     fontWeight: "bold",
     color: "#3e3d77",
+  },
+  errorText: {
+    color: "red",
   },
 });
 

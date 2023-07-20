@@ -5,20 +5,23 @@ import {
   StyleSheet,
   Keyboard,
   View,
+  Text,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useLocalSearchParams } from "expo-router";
 import axios from "axios";
+import { router } from "expo-router";
 import API_BASE_URL from "../../constants";
 
 const validationSchema = Yup.object().shape({
-  otp: Yup.string()
-    .required("Please enter the OTP")
-    .length(4, "OTP must be exactly 4 digits"),
+  otp: Yup.array()
+    .required("OTP is required")
+    .of(Yup.string().matches(/^[0-9]+$/, "OTP must be digits"))
+    .length(4),
 });
-
+var test;
 const OTPScreen = () => {
   const { phone_number, otp } = useLocalSearchParams();
 
@@ -26,7 +29,7 @@ const OTPScreen = () => {
     try {
       const requestData = {
         phone_number,
-        otp: values.otp,
+        otp: values.otp.join(""),
       };
 
       // Perform a POST request to the server with the OTP
@@ -40,7 +43,8 @@ const OTPScreen = () => {
         }
       );
 
-      const responseData = JSON.parse(response.data);
+      const responseData = response.data;
+
       // Replace the route after successful signup
       router.replace({
         pathname: "/PINScreen",
@@ -59,22 +63,26 @@ const OTPScreen = () => {
         <View>
           <Back />
           <Header
-            heading={"Enter your OTP"}
-            subHeading={`Input the OTP sent to your phone number to proceed to account creation{otp is ${otp}}`}
+            heading="Enter your OTP"
+            subHeading={`Input the OTP sent to your phone number to proceed to account creation (OTP is ${otp})`}
           />
           <Formik
-            initialValues={{ otp: "" }}
+            initialValues={{ otp: ["", "", "", ""] }}
             onSubmit={handleSubmitForm}
             validationSchema={validationSchema}
           >
-            {({ handleChange, handleSubmit, values, errors }) => (
+            {({ handleSubmit, setFieldValue, values, errors }) => (
               <>
                 <PinInput
                   margin
-                  value={values.otp}
-                  onChangeText={handleChange("otp")}
-                  error={errors.otp}
+                  pin={values.otp}
+                  setPin={(value) => setFieldValue("otp", value)}
                 />
+                {errors.otp && (
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{errors.otp}</Text>
+                  </View>
+                )}
                 <Button onPress={handleSubmit}>Next</Button>
               </>
             )}
@@ -91,6 +99,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
     padding: 24,
+  },
+  errorContainer: {
+    marginVertical: 8,
+    alignItems: "center",
+  },
+  errorText: {
+    color: "#FF0000",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
 

@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, Text, FlatList } from "react-native";
 import React, { memo } from "react";
-import { Button } from "../components";
-import { Transaction } from "../components/Home";
+import { Button } from "../../components";
+import { Transaction } from "../../components/Home";
 
 const TokenScreen = () => {
   return (
@@ -12,7 +12,7 @@ const TokenScreen = () => {
             width: 24,
             height: 24,
           }}
-          source={require("../assets/menu.png")}
+          source={require("../../assets/menu.png")}
         />
         <View>
           <Text

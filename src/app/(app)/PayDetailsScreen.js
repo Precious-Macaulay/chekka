@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { memo } from "react";
-import { Button } from "../components";
-import { DetailCard } from "../components/Banks";
+import { Button } from "../../components";
+import { DetailCard } from "../../components/Banks";
 
 const PayDetailsScreen = () => {
   return (
@@ -12,7 +12,7 @@ const PayDetailsScreen = () => {
             width: 24,
             height: 24,
           }}
-          source={require("../assets/back.png")}
+          source={require("../../assets/back.png")}
         />
         <Text
           style={{

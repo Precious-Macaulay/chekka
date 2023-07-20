@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Keyboard,
   View,
+  Text,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
@@ -17,9 +18,10 @@ import { useAuth } from "../../contexts/auth";
 
 // Validation schema for PIN input
 const validationSchema = Yup.object().shape({
-  pin: Yup.string()
-    .required("Please enter the PIN")
-    .length(4, "PIN must be exactly 4 digits"),
+  pin: Yup.array()
+    .required("PIN is required")
+    .of(Yup.string().matches(/^[0-9]+$/, "PIN must be digits"))
+    .length(4),
 });
 
 const PINScreen = () => {
@@ -32,7 +34,7 @@ const PINScreen = () => {
     try {
       const requestData = {
         phone_number,
-        pin: values.pin,
+        pin: values.pin.join(""),
       };
 
       // Perform a POST request to the server to save the PIN
@@ -46,11 +48,9 @@ const PINScreen = () => {
         }
       );
       // Save the token to the storage
-      const token = JSON.parse(response.token);
-      await saveTokenToStorage(token);
+      const token = response.data.token;
       //  update the user context
       signIn(token);
-
       // Navigate to the HomeScreen
       router.replace({
         pathname: "/HomeScreen",
@@ -66,27 +66,25 @@ const PINScreen = () => {
         <View>
           <Back />
           <Header
-            heading={"Create New PIN"}
-            subHeading={
-              "Create a new 4-digit PIN for signing into your account"
-            }
+            heading="Create New PIN"
+            subHeading="Create a new 4-digit PIN for signing into your account"
           />
           <Formik
-            initialValues={{ pin: "" }}
+            initialValues={{ pin: ["", "", "", ""] }}
             onSubmit={handleSubmitForm}
             validationSchema={validationSchema}
           >
-            {({ handleChange, handleSubmit, values, errors }) => (
+            {({ setFieldValue, handleSubmit, values, errors }) => (
               <>
                 <PinInput
                   margin
-                  value={values.pin}
-                  onChangeText={handleChange("pin")}
+                  pin={values.pin}
+                  setPin={(value) => setFieldValue("pin", value)}
                 />
                 {errors.pin && (
-                  <Text style={{ color: "red", marginBottom: 10 }}>
-                    {errors.pin}
-                  </Text>
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{errors.pin}</Text>
+                  </View>
                 )}
                 <Button onPress={handleSubmit}>Create</Button>
               </>
@@ -104,6 +102,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
     padding: 24,
+  },
+  errorContainer: {
+    marginTop: 8,
+    marginBottom: 16,
+    alignItems: "center",
+  },
+  errorText: {
+    color: "#FF0000",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });
 

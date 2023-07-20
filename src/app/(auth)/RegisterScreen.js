@@ -1,11 +1,6 @@
 // Import statements
 import React, { memo } from "react";
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, Keyboard, View, Text } from "react-native";
 import { Back, Button, Header, Input } from "../../components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
@@ -15,16 +10,17 @@ import { router } from "expo-router";
 import API_BASE_URL from "../../constants";
 
 // Helper component to display validation errors (you can customize it further if needed)
-const ErrorText = () => null;
+const ErrorText = ({ children }) => (
+  <View style={styles.errorContainer}>
+    <Text style={styles.errorText}>{children}</Text>
+  </View>
+);
 
 // Validation schema for form fields
 const validationSchema = Yup.object().shape({
   phoneNumber: Yup.string()
     .required("Phone Number is required")
-    .matches(
-      /^\+234[789]\d{9}$/,
-      "Invalid Nigerian phone number input country code"
-    ),
+    .matches(/^\+234[789]\d{9}$/, "Invalid Nigerian phone number input country code"),
   firstName: Yup.string().required("First Name is required"),
   lastName: Yup.string().required("Last Name is required"),
   businessName: Yup.string().required("Business Name is required"),
@@ -47,8 +43,9 @@ const RegisterScreen = () => {
           "Content-Type": "application/json",
         },
       });
+      
+      const { phone_number, otp } = response.data;
 
-      const { phone_number, otp } = JSON.parse(response.data);
       // Replace the route after successful signup
       router.replace({
         pathname: "/OTPScreen",
@@ -67,10 +64,7 @@ const RegisterScreen = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <Back />
-          <Header
-            heading={"Get Started"}
-            subHeading={"Let's get to know you"}
-          />
+          <Header heading="Get Started" subHeading="Let's get to know you" />
           <Formik
             initialValues={{
               phoneNumber: "",
@@ -84,42 +78,38 @@ const RegisterScreen = () => {
             {({ handleChange, handleSubmit, values, errors }) => (
               <>
                 <Input
-                  label={"Phone Number"}
-                  placeholder={"+2348162060070"}
+                  label="Phone Number"
+                  placeholder="+2348162060070"
                   type="telephoneNumber"
                   keyboardType="phone-pad"
                   onChangeText={handleChange("phoneNumber")}
                   value={values.phoneNumber}
                 />
-                {errors.phoneNumber && (
-                  <ErrorText>{errors.phoneNumber}</ErrorText>
-                )}
+                {errors.phoneNumber && <ErrorText>{errors.phoneNumber}</ErrorText>}
 
                 <Input
-                  label={"First Name"}
-                  placeholder={"John"}
+                  label="First Name"
+                  placeholder="John"
                   onChangeText={handleChange("firstName")}
                   value={values.firstName}
                 />
                 {errors.firstName && <ErrorText>{errors.firstName}</ErrorText>}
 
                 <Input
-                  label={"Last Name"}
-                  placeholder={"Peters"}
+                  label="Last Name"
+                  placeholder="Peters"
                   onChangeText={handleChange("lastName")}
                   value={values.lastName}
                 />
                 {errors.lastName && <ErrorText>{errors.lastName}</ErrorText>}
 
                 <Input
-                  label={"Business Name"}
-                  placeholder={"Okara Enterprise"}
+                  label="Business Name"
+                  placeholder="Okara Enterprise"
                   onChangeText={handleChange("businessName")}
                   value={values.businessName}
                 />
-                {errors.businessName && (
-                  <ErrorText>{errors.businessName}</ErrorText>
-                )}
+                {errors.businessName && <ErrorText>{errors.businessName}</ErrorText>}
 
                 <Button onPress={handleSubmit} margin>
                   Next
@@ -139,6 +129,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
     padding: 24,
+  },
+  errorContainer: {
+    marginTop: 4,
+    marginBottom: 8,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
   },
 });
 

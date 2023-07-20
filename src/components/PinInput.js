@@ -1,7 +1,7 @@
 import React, { memo, useRef } from "react";
 import { StyleSheet, View, Text, TextInput } from "react-native";
 
-const PinInput = ({ label, margin }) => {
+const PinInput = ({ label, margin, pin, setPin }) => {
   const inputRefs = useRef([]);
 
   const handleRef = (ref, index) => {
@@ -11,6 +11,25 @@ const PinInput = ({ label, margin }) => {
   const focusNextInput = (index) => {
     if (inputRefs.current[index + 1]) {
       inputRefs.current[index + 1].focus();
+    }
+  };
+
+  const focusPreviousInput = (index) => {
+    if (inputRefs.current[index - 1]) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  const handleKeyPress = (e, index) => {
+    if (e.nativeEvent.key === "Backspace") {
+      setPin(
+        (() => {
+          const newPin = [...pin];
+          newPin[index] = "";
+          return newPin;
+        })()
+      );
+      focusPreviousInput(index);
     }
   };
 
@@ -26,8 +45,17 @@ const PinInput = ({ label, margin }) => {
             keyboardType="numeric"
             maxLength={1}
             textAlign="center"
+            value={pin[index]}
+            onKeyPress={(e) => handleKeyPress(e, index)}
             onChangeText={(text) => {
               if (text.length === 1) {
+                setPin(
+                  (() => {
+                    const newPin = [...pin];
+                    newPin[index] = text;
+                    return newPin;
+                  })()
+                );
                 focusNextInput(index);
               }
             }}

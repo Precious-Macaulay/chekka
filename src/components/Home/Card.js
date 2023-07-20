@@ -1,37 +1,42 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
+import { View, StyleSheet, Text, Image, Pressable } from "react-native";
+import { useMonoConnect } from "@mono.co/connect-react-native";
 
-const Card = () => {
+const Card = ({ banks, moneyIn, moneyOut }) => {
+  const { init } = useMonoConnect();
+
   return (
-    <View style={styles.home_card}>
-      {/* <Text style={styles.connect_text}>Connect Bank Account</Text> */}
-      <View style={styles.card_details}>
-        <View style={styles.card_group}>
-          <View style={[styles.card_key_group, { width: "45%" }]}>
-            <Text style={styles.card_key}>Total Balance</Text>
-            <Image
-              style={{
-                width: 16,
-                height: 16,
-              }}
-              source={require("../../assets/eye.png")}
-            />
+    <View style={styles.cardContainer}>
+      {!banks ? (
+        <Pressable onPress={() => init()}>
+          <Text style={styles.connectText}>Link your bank account</Text>
+        </Pressable>
+      ) : (
+        <View style={styles.cardDetails}>
+          <View style={styles.cardGroup}>
+            <View style={[styles.cardKeyGroup, { width: "45%" }]}>
+              <Text style={styles.cardKey}>Total Balance</Text>
+              <Image
+                style={styles.eyeIcon}
+                source={require("../../assets/eye.png")}
+              />
+            </View>
+            <Text style={[styles.cardValueCommon, { fontSize: 36 }]}>
+              ₦{banks.account.balance.toFixed(2)}
+            </Text>
           </View>
-          <Text style={[styles.card_value_common, { fontSize: 36 }]}>
-            ₦54,453.87
-          </Text>
+          <View style={[styles.cardKeyGroup, { width: "100%" }]}>
+            <View>
+              <Text style={styles.cardKey}>Money In</Text>
+              <Text style={styles.cardValueCommon}>₦{moneyIn.toFixed(2)}</Text>
+            </View>
+            <View>
+              <Text style={styles.cardKey}>Money Out</Text>
+              <Text style={styles.cardValueCommon}>₦{moneyOut.toFixed(2)}</Text>
+            </View>
+          </View>
         </View>
-        <View style={[styles.card_key_group, { width: "100%" }]}>
-          <View>
-            <Text style={styles.card_key}>Money In</Text>
-            <Text style={styles.card_value_common}>₦54,453.00</Text>
-          </View>
-          <View>
-            <Text style={styles.card_key}>Money Out</Text>
-            <Text style={styles.card_value_common}>₦54,453.00</Text>
-          </View>
-        </View>
-      </View>
+      )}
     </View>
   );
 };
@@ -39,40 +44,42 @@ const Card = () => {
 export default memo(Card);
 
 const styles = StyleSheet.create({
-  home_card: {
+  cardContainer: {
     width: "100%",
     paddingHorizontal: 30,
     paddingVertical: 24,
     backgroundColor: "black",
     borderRadius: 24,
-    display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 30,
   },
-  connect_text: {
+  connectText: {
     color: "white",
     fontSize: 24,
     fontWeight: "400",
   },
-  card_group: {
+  cardGroup: {
     display: "flex",
   },
-  card_key: {
+  cardKey: {
     color: "#ffffff",
   },
-  card_key_group: {
-    display: "flex",
+  cardKeyGroup: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
   },
-  card_value_common: {
+  cardValueCommon: {
     color: "#ffffff",
     fontWeight: "700",
     fontSize: 24,
   },
-  card_details: {
+  cardDetails: {
     width: "100%",
     gap: 30,
+  },
+  eyeIcon: {
+    width: 16,
+    height: 16,
   },
 });

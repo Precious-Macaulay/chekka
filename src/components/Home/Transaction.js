@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { memo } from "react";
 
-const Transaction = () => {
+const Transaction = ({ name, amount, details }) => {
   return (
     <View style={styles.transaction_group}>
       <View style={styles.transaction_details}>
@@ -15,11 +15,11 @@ const Transaction = () => {
           <Image source={require("../../assets/back.png")} />
         </View>
         <View>
-          <Text style={styles.detail_head}>Bread</Text>
-          <Text style={{ color: "#8f93a1" }}>10 transactions</Text>
+          <Text style={styles.detail_head}>{name}</Text>
+          <Text style={{ color: "#8f93a1" }}>{details}</Text>
         </View>
       </View>
-      <Text style={styles.transaction_amount}>₦553.65</Text>
+      <Text style={styles.transaction_amount}> ₦{amount.toFixed(2)}</Text>
     </View>
   );
 };

@@ -6,11 +6,11 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
-import logo from "../assets/logo.png";
-import illustration from "../assets/startscreen.png";
+import logo from "../../assets/logo.png";
+import illustration from "../../assets/startscreen.png";
 import { Button } from "../../components";
 import { Link } from "expo-router";
-import axios from "axios";
+
 
 // StartScreen component
 const StartScreen = () => {
@@ -20,7 +20,7 @@ const StartScreen = () => {
         <Image source={logo} style={styles.logo} />
         <Image source={illustration} style={styles.illustration} />
         <Text style={styles.startText}>No stress with money</Text>
-        <Link href={"/LoginScreen"} asChild>
+        <Link href={"/HomeScreen"} asChild>
           <Button outline>Login</Button>
         </Link>
         <Link href={"/RegisterScreen"} asChild>

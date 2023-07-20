@@ -12,7 +12,7 @@ const AllBankScreen = () => {
             width: 24,
             height: 24,
           }}
-          source={require("../assets/back.png")}
+          source={require("../../assets/back.png")}
         />
         <View>
           <Text
@@ -39,7 +39,7 @@ const AllBankScreen = () => {
             width: 42,
             height: 42,
           }}
-          source={require("../assets/add.png")}
+          source={require("../../assets/add.png")}
         />
       </View>
 

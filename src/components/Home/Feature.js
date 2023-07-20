@@ -1,45 +1,42 @@
-import { StyleSheet, Text, View, Image } from "react-native";
 import React, { memo } from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { Link } from "expo-router";
 
-const Feature = ({ children, src, backgroundColor }) => {
+const Feature = ({ children, src, backgroundColor, href }) => {
   return (
-    <View>
-      <View style={styles.quick_action_group}>
-        <View
-          style={[
-            styles.quick_action_background,
-            { backgroundColor: backgroundColor },
-          ]}
-        >
-          <Image style={styles.quick_action_image} source={src} />
+    <Link href={href} asChild>
+      <View style={styles.container}>
+        <View style={[styles.quickActionGroup, { backgroundColor }]}>
+          <Image style={styles.quickActionImage} source={src} />
         </View>
-        <Text style={styles.quick_action_text}>{children}</Text>
+        <Text style={styles.quickActionText}>{children}</Text>
       </View>
-    </View>
+    </Link>
   );
 };
 
 export default memo(Feature);
 
 const styles = StyleSheet.create({
-  quick_action_group: {
+  container: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: 4,
-    width: "max-content",
   },
-  quick_action_background: {
+  quickActionGroup: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 16,
     borderRadius: 16,
   },
-  quick_action_text: {
+  quickActionText: {
     fontSize: 14,
     fontWeight: "400",
     width: 50,
     textAlign: "center",
   },
-  quick_action_image: {
+  quickActionImage: {
     width: 32,
     height: 32,
   },
