@@ -1,35 +1,66 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
-import React, { memo,useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { Transaction } from "../../components/Home";
 import { useAuth } from "../../contexts/auth";
 import API_BASE_URL from "../../constants/index";
 import axios from "axios";
-
+import { Link, useLocalSearchParams } from "expo-router";
 
 const ProductScreen = () => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState({
+    paging: {
+      total: 190,
+      page: 2,
+      previous: "https://api.withmono.com/accounts/:id/transactions?page=2",
+      next: "https://api.withmono.com/accounts/:id/transactions?page=3",
+    },
+    data: [
+      {
+        _id: "62a05bc04112ea670bd09812",
+        type: "debit",
+        amount: 2400,
+        narration: "BOLA credit",
+        date: "2022-05-30T16:03:00",
+        balance: 1020841,
+        currency: "NGN",
+        category: "online_transactions",
+      },
+      {
+        _id: "62a05bc04112ea670bd13465",
+        type: "credit",
+        amount: 3000,
+        narration:
+          "TURAT credit",
+        date: "2022-05-30T15:44:00",
+        balance: 1168926,
+        currency: "NGN",
+        category: "transfer",
+      },
+    ],
+  });
 
-  const { user } = useAuth();
+  const { name, price } = useLocalSearchParams();
+  // const { user } = useAuth();
 
-  const getTransactions = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/transactions`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      setTransactions(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getTransactions = async () => {
+  //   try {
+  //     const response = await axios.get(`${API_BASE_URL}/transactions`, {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     });
+  //     setTransactions(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getTransactions();
-  }, []);
+  // useEffect(() => {
+  //   getTransactions();
+  // }, []);
 
   return (
-    <>
+    <View style={styles.container}>
       <View style={styles.bank_head}>
         <Image
           style={{
@@ -44,7 +75,7 @@ const ProductScreen = () => {
             fontWeight: "500",
           }}
         >
-          Bread
+          {name}'s Product
         </Text>
         <View>{null}</View>
       </View>
@@ -65,7 +96,7 @@ const ProductScreen = () => {
             color: "#6488c5",
           }}
         >
-          ₦54,453.87
+          ₦{price}.00
         </Text>
       </View>
       <View
@@ -101,12 +132,14 @@ const ProductScreen = () => {
               fontWeight: "600",
             }}
           >
-            67
+            2
           </Text>
         </View>
-        <View style={{
-            borderWidth: 1
-        }}></View>
+        <View
+          style={{
+            borderWidth: 1,
+          }}
+        ></View>
         <View
           style={{
             display: "flex",
@@ -129,13 +162,13 @@ const ProductScreen = () => {
               fontWeight: "600",
             }}
           >
-            20
+            32
           </Text>
         </View>
       </View>
       <View>
         <Text style={styles.sub_head}>Transaction History</Text>
-        <View style={{ height: 470 }}>
+        {/* <View style={{ height: 470 }}>
           <FlatList
             data={[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]}
             renderItem={() => <Transaction />}
@@ -144,15 +177,40 @@ const ProductScreen = () => {
             }}
             showsVerticalScrollIndicator={false}
           />
+        </View> */}
+        {/* this is the updated one */}
+        <View style={{ height: 470 }}>
+          <FlatList
+            data={transactions.data}
+            renderItem={({ item }) => (
+              <Link href={"/PayDtailScreen"} asChild>
+              <Transaction
+                name={item.narration}
+                amount={item.amount}
+                details={item.date}
+              />
+              </Link>
+            )}
+            keyExtractor={(item) => {
+              `${item._id}`;
+            }}
+            showsVerticalScrollIndicator={false}
+          />
         </View>
       </View>
-    </>
+    </View>
   );
 };
 
 export default memo(ProductScreen);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingHorizontal: 30,
+    paddingTop: 50,
+  },
   bank_head: {
     display: "flex",
     marginTop: 15,

@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   cardKeyGroup: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
   },
   cardValueCommon: {
     color: "#ffffff",

@@ -52,9 +52,7 @@ const PINScreen = () => {
       //  update the user context
       signIn(token);
       // Navigate to the HomeScreen
-      router.replace({
-        pathname: "/HomeScreen",
-      });
+      router.replace("/HomeScreen");
     } catch (error) {
       console.error("Error saving PIN:", error);
     }

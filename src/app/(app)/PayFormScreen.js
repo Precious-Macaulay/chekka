@@ -11,6 +11,12 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Button, Input } from "../../components";
+import { useAuth } from "../../contexts/auth";
+import API_BASE_URL from "../../constants/index";
+import axios from "axios";
+import { router } from "expo-router";
+
+
 
 const ErrorText = ({ children }) => (
   <View style={styles.errorContainer}>
@@ -30,6 +36,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const PayFormScreen = () => {
+
+  const { user } = useAuth();
   const handleSubmitForm = async (values) => {
     try {
       // Handle form submission here

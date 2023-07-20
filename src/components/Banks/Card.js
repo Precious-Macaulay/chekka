@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { memo } from "react";
 
-const Card = () => {
+const Card = ({balance, accountNumber, name }) => {
   return (
     <View style={styles.home_card}>
       {/* <Text style={styles.connect_text}>Connect Bank Account</Text> */}
@@ -18,13 +18,13 @@ const Card = () => {
             />
           </View>
           <Text style={[styles.card_value_common, { fontSize: 36 }]}>
-            ₦54,453.87
+            ₦{balance.toFixed(2)}
           </Text>
         </View>
         <View style={[styles.card_key_group, { width: "100%" }]}>
           <View>
-            <Text style={[styles.card_key, { fontSize: 18 }]}>2266133845</Text>
-            <Text style={styles.card_value_common}>Zenith Bank PLC</Text>
+            <Text style={[styles.card_key, { fontSize: 18 }]}>{accountNumber}</Text>
+            <Text style={styles.card_value_common}>{name}</Text>
           </View>
           <View>
             <Image

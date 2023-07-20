@@ -38,9 +38,7 @@ const LoginScreen = () => {
       auth.signIn(token);
 
       // Replace the route after successful PIN creation
-      router.replace({
-        pathname: "/HomeScreen",
-      });
+      router.replace("/HomeScreen");
     } catch (error) {
       console.error("Error logging in:", error);
     }

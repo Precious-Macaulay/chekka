@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { memo } from "react";
 
+
 const Transaction = ({ name, amount, details }) => {
   return (
     <View style={styles.transaction_group}>
@@ -19,7 +20,7 @@ const Transaction = ({ name, amount, details }) => {
           <Text style={{ color: "#8f93a1" }}>{details}</Text>
         </View>
       </View>
-      <Text style={styles.transaction_amount}> ₦{amount.toFixed(2)}</Text>
+      <Text style={styles.transaction_amount}> ₦{amount}</Text>
     </View>
   );
 };
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 40,
   },
   transaction_details: {
     display: "flex",
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
   transaction_amount: {
     fontSize: 18,
     fontWeight: "600",
+    marginLeft: 80,
   },
   detail_head: {
     fontSize: 18,

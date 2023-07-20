@@ -29,6 +29,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         signIn: (token) => setAuth({ token: token }),
+        updateUserData: (data) => setAuth({ ...user, ...data }),
         signOut: () => setAuth(null),
         user,
       }}

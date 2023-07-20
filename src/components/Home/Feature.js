@@ -1,17 +1,14 @@
 import React, { memo } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import { Link } from "expo-router";
 
-const Feature = ({ children, src, backgroundColor, href }) => {
+const Feature = ({ children, src, backgroundColor }) => {
   return (
-    <Link href={href} asChild>
       <View style={styles.container}>
         <View style={[styles.quickActionGroup, { backgroundColor }]}>
           <Image style={styles.quickActionImage} source={src} />
         </View>
         <Text style={styles.quickActionText}>{children}</Text>
       </View>
-    </Link>
   );
 };
 
