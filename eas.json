@@ -8,11 +8,13 @@
       "distribution": "internal"
     },
     "preview": {
+      "distribution": "internal",
+      "node": "18.16.1",
       "android": {
-        "buildType": "apk"
-      },
-      "distribution": "internal"
+        "gradleCommand": ":app:assembleRelease"
+      }
     },
+    
     "production": {}
   },
   "submit": {
