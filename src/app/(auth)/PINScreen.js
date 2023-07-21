@@ -13,7 +13,6 @@ import * as Yup from "yup";
 import axios from "axios";
 import { router, useLocalSearchParams } from "expo-router";
 import API_BASE_URL from "../../constants";
-import { saveTokenToStorage } from "../../helpers/storage";
 import { useAuth } from "../../contexts/auth";
 
 // Validation schema for PIN input
